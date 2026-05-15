@@ -12,7 +12,7 @@ const server = http.createServer((req, res) => {
     //GET
     if (req.method === "GET" && req.url === "/getBooks") {
         res.writeHead(200, { "Content-Type": "application/json" });
-        return res.end(JSON.stringify(books))
+        return res.end(JSON.stringify(shelf))
     }
 
     //POST
@@ -25,7 +25,7 @@ const server = http.createServer((req, res) => {
     });
 
         req.on("end", () => {
-            const newBook = json.parse(body)
+            const newBook = JSON.parse(body)
 
             newBook.id = shelf.length + 1;
 
@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
     }
  
     //PUT
-    if (req.method === "POST" && req.url === "/updateBooks/") {
+    if (req.method === "PUT" && req.url.startsWith("/updateBooks/")) {
         
         const id = parseInt(req.url.split("/")[2]);
 
@@ -51,7 +51,7 @@ const server = http.createServer((req, res) => {
 
         req.on("end", () => {
 
-            const updatedBook = json.parse(body);
+            const updatedBook = JSON.parse(body);
             const book = shelf.find(u => u.id === id);
 
             if (!book) {
@@ -72,7 +72,7 @@ const server = http.createServer((req, res) => {
     }
 
     //DELETE
-    if (req.method === "DELETE" && req.url === "/deleteBooks/") {
+    if (req.method === "DELETE" && req.url.startsWith("/deleteBooks/")) {
 
         const id = parseInt(req.url.split("/")[2]);
 
