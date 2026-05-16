@@ -10,13 +10,13 @@ let shelf = [
 const server = http.createServer((req, res) => {
 
     //GET
-    if (req.method === "GET" && req.url === "/getBooks") {
+    if (req.method === "GET" && req.url === "/books") {
         res.writeHead(200, { "Content-Type": "application/json" });
         return res.end(JSON.stringify(shelf))
     }
 
     //POST
-    if (req.method === "POST" && req.url === "/createShelf") {
+    if (req.method === "POST" && req.url === "/addbook") {
         
         let body = "";
 
@@ -39,7 +39,7 @@ const server = http.createServer((req, res) => {
     }
  
     //PUT
-    if (req.method === "PUT" && req.url.startsWith("/updateBooks/")) {
+    if (req.method === "PUT" && req.url.startsWith("/update/")) {
         
         const id = parseInt(req.url.split("/")[2]);
 
@@ -72,7 +72,7 @@ const server = http.createServer((req, res) => {
     }
 
     //DELETE
-    if (req.method === "DELETE" && req.url.startsWith("/deleteBooks/")) {
+    if (req.method === "DELETE" && req.url.startsWith("/delete/")) {
 
         const id = parseInt(req.url.split("/")[2]);
 
@@ -91,4 +91,12 @@ const server = http.createServer((req, res) => {
 
 server.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
+});
+
+
+const express = require('express')
+const app = express()
+
+app.listen(3000, () => {
+    console.log("Server is running on port 3000");
 });
